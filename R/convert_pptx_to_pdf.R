@@ -26,8 +26,9 @@ convert_to_pdf <- function(path, pdf_file = sub("[.]pptx", ".pdf", path)) {
   # and don't want to do that in case pdf_file in other location
   cp_path = tempfile(fileext = ".pptx")
   cp_pdf = sub("[.](pptx|docx|doc)$", ".pdf", cp_path)
-  file.copy(path, cp_path)
+  file.copy(path, cp_path, overwrite = TRUE)
 
+  stopifnot(file.exists(cp_path))
   if (Sys.info()["sysname"] == "Windows") {
     convert_win(lo_path, dirname(cp_path), cp_path, convert_to = "pdf")
   } else {
